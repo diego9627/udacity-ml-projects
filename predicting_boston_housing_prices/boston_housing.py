@@ -57,7 +57,7 @@ def split_data(city_data):
     ###################################
     
     from sklearn.cross_validation import train_test_split
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3) 
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 0) 
 
     return X_train, y_train, X_test, y_test
 
@@ -90,7 +90,7 @@ def learning_curve(depth, X_train, y_train, X_test, y_test):
 
         s = int(s)
         # Create and fit the decision tree regressor model
-        regressor = DecisionTreeRegressor(max_depth=depth)
+        regressor = DecisionTreeRegressor(max_depth=depth, random_state = 0)
         regressor.fit(X_train[:s], y_train[:s])
 
         # Find the performance on the training and testing set
@@ -127,7 +127,7 @@ def model_complexity(X_train, y_train, X_test, y_test):
 
     for i, d in enumerate(max_depth):
         # Setup a Decision Tree Regressor so that it learns a tree with depth d
-        regressor = DecisionTreeRegressor(max_depth=d)
+        regressor = DecisionTreeRegressor(max_depth=d, random_state = 0)
 
         # Fit the learner to the training data
         regressor.fit(X_train, y_train)
@@ -162,9 +162,10 @@ def fit_predict_model(city_data):
     X, y = city_data.data, city_data.target
 
     # Setup a Decision Tree Regressor
-    regressor = DecisionTreeRegressor()
+    regressor = DecisionTreeRegressor(random_state = 0)
 
-    parameters = {'max_depth':(1,2,3,4,5,6,7,8,9,10)}
+    parameters = {'max_depth':(1,2,3,4,5,6,7,8,9,10),
+                  'max_features':(1,2,3,4,5,6,7,8,9,10,11,12,13)}
 
     ###################################
     ### Step 4. YOUR CODE GOES HERE ###
